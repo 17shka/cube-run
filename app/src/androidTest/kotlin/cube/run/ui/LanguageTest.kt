@@ -208,7 +208,7 @@ class LanguageTest {
                 await { a -> views(a.window.decorView).none { it is LanguageSheet && it.isShown } }
                 assertFalse("The settings page stays under the sheet", Stage.homeScreen)
                 openLanguages()
-                for (code in listOf("en", "de", "he", "en")) {
+                for (code in listOf("en", "de", "he", "ru", "uk", "en")) {
                     if (code != Languages.current(context)) {
                         tapMatching { a, view ->
                             val option = Languages.options.single { it.code == code }
@@ -231,7 +231,7 @@ class LanguageTest {
                         Languages.options.forEach { assertFalse(labels.contains(a.getString(it.country))) }
                         assertEquals(if (code == "he") View.LAYOUT_DIRECTION_RTL else View.LAYOUT_DIRECTION_LTR, sheet.layoutDirection)
                         val rows = views(sheet).filter { it.isClickable && it.contentDescription?.contains(",") == true }.toList()
-                        assertEquals(3, rows.size)
+                        assertEquals(5, rows.size)
                         assertEquals(1, rows.count { it.isSelected })
                         assertTrue(rows.single { it.isSelected }.contentDescription.startsWith(Languages.options.single { it.code == code }.nativeName))
                         assertFalse(Stage.homeScreen)
@@ -406,7 +406,7 @@ class LanguageTest {
         val prefs = context.getSharedPreferences("settings", Context.MODE_PRIVATE)
         val original = prefs.getString("language", null)
         try {
-            for ((code, title) in listOf("en" to "Languages", "de" to "Sprachen", "he" to "שפות")) {
+            for ((code, title) in listOf("en" to "Languages", "de" to "Sprachen", "he" to "שפות", "ru" to "Языки", "uk" to "Мови")) {
                 Languages.select(context, code)
                 val localized = Languages.wrap(context)
                 assertEquals(title, localized.getString(R.string.languages_title))
