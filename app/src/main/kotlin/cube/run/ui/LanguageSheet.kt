@@ -118,6 +118,7 @@ class LanguageSheet(
                 orientation = LinearLayout.VERTICAL
                 importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_NO_HIDE_DESCENDANTS
                 addView(kit.text(option.nativeName, 21f, Theme.INK, 600, Gravity.START).apply {
+                    typeface = Fonts.get(activity, 600, option.code)
                     textDirection = View.TEXT_DIRECTION_FIRST_STRONG
                     textAlignment = View.TEXT_ALIGNMENT_VIEW_START
                 }, LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT))

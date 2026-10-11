@@ -412,6 +412,29 @@ class LanguageTest {
         }
     }
 
+    @Test fun bundledFontsCoverCyrillicAndPreserveLatinAndHebrew() {
+        for (weight in listOf(400, 600, 700)) {
+            val actual = android.graphics.Paint().apply { textSize = 40f; typeface = Fonts.get(context, weight, "ru") }
+            val cyrillic = android.graphics.Paint().apply {
+                textSize = 40f
+                typeface = android.graphics.Typeface.Builder(context.assets, "fonts/FredokaOneCyrillic-Regular.ttf").build()
+            }
+            for (text in listOf("Русский", "Українська", "ҐґЄєІіЇї")) {
+                assertEquals("Cyrillic must use the bundled extension at weight $weight", cyrillic.measureText(text), actual.measureText(text), .01f)
+            }
+            if (android.os.Build.VERSION.SDK_INT >= 29) {
+                val original = android.graphics.Paint().apply {
+                    textSize = 40f
+                    typeface = android.graphics.Typeface.Builder(context.assets, "fonts/Fredoka.ttf")
+                        .setFontVariationSettings("'wght' $weight, 'wdth' 100").build()
+                }
+                for (text in listOf("American", "Deutsch", "עברית")) {
+                    assertEquals("Original Fredoka must be retained for $text", original.measureText(text), actual.measureText(text), .01f)
+                }
+            }
+        }
+    }
+
     @Test fun slavicMenusRenderWithoutClippedText() {
         for (code in listOf("ru", "uk")) {
             Languages.select(context, code)

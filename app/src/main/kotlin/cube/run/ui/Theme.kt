@@ -3,6 +3,10 @@ package cube.run.ui
 import android.content.Context
 import android.graphics.Color
 import android.graphics.Typeface
+import android.graphics.fonts.Font
+import android.graphics.fonts.FontFamily
+import android.graphics.fonts.FontStyle
+import android.os.Build
 
 /**
  * The candy-arcade look, in one place: colour tokens, the display font and
@@ -79,16 +83,36 @@ object Theme {
         Color.HSVToColor(floatArrayOf(((h % 360f) + 360f) % 360f, s, v))
 }
 
-/** The bundled display font (Fredoka, OFL) at a few weights, cached. */
+/** Fredoka for Latin/Hebrew, with bundled Fredoka One Cyrillic for Cyrillic glyphs. */
 object Fonts {
-    private val cache = HashMap<Int, Typeface>()
+    private val cache = HashMap<Pair<Boolean, Int>, Typeface>()
 
-    /** [weight] 300..700. */
-    fun get(ctx: Context, weight: Int): Typeface = cache.getOrPut(weight) {
-        runCatching {
-            Typeface.Builder(ctx.assets, "fonts/Fredoka.ttf")
-                .setFontVariationSettings("'wght' $weight, 'wdth' 100")
-                .build()
-        }.getOrNull() ?: if (weight >= 600) Typeface.DEFAULT_BOLD else Typeface.DEFAULT
+    /** [weight] 300..700. Android 9 needs a language-specific face instead of custom fallback. */
+    fun get(ctx: Context, weight: Int, language: String = ctx.resources.configuration.locales[0].language): Typeface {
+        val legacyCyrillic = Build.VERSION.SDK_INT < 29 && (language == "ru" || language == "uk")
+        return cache.getOrPut(legacyCyrillic to weight) {
+            runCatching {
+                if (Build.VERSION.SDK_INT >= 29) withCyrillicFallback(ctx, weight) else {
+                    val builder = Typeface.Builder(ctx.assets,
+                        if (legacyCyrillic) "fonts/FredokaOneCyrillic-Regular.ttf" else "fonts/Fredoka.ttf")
+                    if (!legacyCyrillic) builder.setFontVariationSettings("'wght' $weight, 'wdth' 100")
+                    builder.build()
+                }
+            }.getOrNull() ?: if (weight >= 600) Typeface.DEFAULT_BOLD else Typeface.DEFAULT
+        }
+    }
+
+    @android.annotation.TargetApi(29)
+    private fun withCyrillicFallback(ctx: Context, weight: Int): Typeface {
+        val primary = Font.Builder(ctx.assets, "fonts/Fredoka.ttf")
+            .setFontVariationSettings("'wght' $weight, 'wdth' 100")
+            .setWeight(weight).build()
+        // The Cyrillic extension has one fixed style; use its original outlines at every UI weight.
+        val cyrillic = Font.Builder(ctx.assets, "fonts/FredokaOneCyrillic-Regular.ttf")
+            .setWeight(weight).build()
+        return Typeface.CustomFallbackBuilder(FontFamily.Builder(primary).build())
+            .addCustomFallback(FontFamily.Builder(cyrillic).build())
+            .setStyle(FontStyle(weight, FontStyle.FONT_SLANT_UPRIGHT))
+            .build()
     }
 }
