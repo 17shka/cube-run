@@ -3,10 +3,8 @@
     <string name="languages_title">Мови</string>
     <string name="cd_languages">Вибрати мову</string>
     <string name="language_option">%1$s, %2$s</string>
-    <string name="country_us">Сполучені Штати</string>
-    <string name="country_germany">Німеччина</string>
-    <string name="country_israel">Ізраїль</string>
-    <string name="country_russia">Росія</string>
-    <string name="country_ukraine">Україна</string>
+    <string name="language_name">Українська</string>
+    <string name="language_country">Україна</string>
+    <string name="language_flag">🇺🇦</string>
     <string name="tap_to_start">ТОРКНІТЬСЯ ДЛЯ СТАРТУ</string>
 </resources>

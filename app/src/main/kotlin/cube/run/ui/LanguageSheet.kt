@@ -12,7 +12,6 @@ import android.view.Gravity
 import android.view.View
 import android.view.MotionEvent
 import android.view.accessibility.AccessibilityNodeInfo
-import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.ScrollView
 import cube.run.R
@@ -79,7 +78,7 @@ class LanguageSheet(
         }, LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT).apply { bottomMargin = dp(20f) })
 
         val current = Languages.current(activity)
-        for (option in Languages.options) {
+        for (option in Languages.options(activity)) {
             val selected = option.code == current
             val row = LinearLayout(activity).apply {
                 orientation = LinearLayout.HORIZONTAL
@@ -92,7 +91,7 @@ class LanguageSheet(
                     GradientDrawable().apply { cornerRadius = dpf(20f); setColor(Theme.WHITE) })
                 isSelected = selected
                 isFocusable = true
-                contentDescription = activity.getString(R.string.language_option, option.nativeName, activity.getString(option.country))
+                contentDescription = activity.getString(R.string.language_option, option.nativeName, option.country)
                 accessibilityDelegate = object : View.AccessibilityDelegate() {
                     override fun onInitializeAccessibilityNodeInfo(host: View, info: AccessibilityNodeInfo) {
                         super.onInitializeAccessibilityNodeInfo(host, info)
@@ -108,11 +107,9 @@ class LanguageSheet(
                 }
                 Anim.pressFeedback(this)
             }
-            row.addView(ImageView(activity).apply {
-                setImageResource(option.flag)
-                scaleType = ImageView.ScaleType.FIT_CENTER
+            row.addView(kit.text(option.flag, 24f, Theme.INK, 400, Gravity.CENTER).apply {
                 importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_NO
-            }, LinearLayout.LayoutParams(dp(42f), dp(28f)))
+            }, LinearLayout.LayoutParams(dp(42f), LinearLayout.LayoutParams.WRAP_CONTENT))
             row.addView(LinearLayout(activity).apply {
                 orientation = LinearLayout.VERTICAL
                 importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_NO_HIDE_DESCENDANTS
@@ -123,7 +120,7 @@ class LanguageSheet(
             }, LinearLayout.LayoutParams(0, LayoutParams.WRAP_CONTENT, 1f).apply { marginStart = dp(12f); marginEnd = dp(8f) })
             row.addView(SelectionMark(activity, kit, selected), LinearLayout.LayoutParams(dp(24f), dp(24f)))
             card.addView(row, LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT).apply {
-                if (option != Languages.options.first()) topMargin = dp(12f)
+                if (option != Languages.options(activity).first()) topMargin = dp(12f)
             })
         }
     }

@@ -6,33 +6,44 @@ import android.os.LocaleList
 import cube.run.R
 import java.util.Locale
 
-/** Add a resource translation and an entry here to offer another language. */
+/** Automatically discovers and loads available languages from translation resources. */
 object Languages {
-    data class Option(val code: String, val nativeName: String, val country: Int, val flag: Int)
+    data class Option(val code: String, val nativeName: String, val country: String, val flag: String)
 
-    val options = listOf(
-        Option("en", "American", R.string.country_us, R.drawable.flag_us),
-        Option("de", "Deutsch", R.string.country_germany, R.drawable.flag_de),
-        Option("he", "עברית", R.string.country_israel, R.drawable.flag_il),
-        Option("ru", "Русский", R.string.country_russia, R.drawable.flag_ru),
-        Option("uk", "Українська", R.string.country_ukraine, R.drawable.flag_ua),
-    )
+    fun options(ctx: Context): List<Option> {
+        val codes = ctx.resources.getStringArray(R.array.supported_languages)
+        return codes.map { code ->
+            val locale = Locale.forLanguageTag(if (code == "en") "en-US" else code)
+            val config = Configuration(ctx.resources.configuration).apply {
+                setLocales(LocaleList(locale))
+                setLayoutDirection(locale)
+            }
+            val localizedCtx = ctx.createConfigurationContext(config)
+            Option(
+                code = code,
+                nativeName = localizedCtx.getString(R.string.language_name),
+                country = localizedCtx.getString(R.string.language_country),
+                flag = localizedCtx.getString(R.string.language_flag)
+            )
+        }
+    }
 
     private fun normalize(code: String) = if (code == "iw") "he" else code
 
     fun current(ctx: Context): String {
         val saved = ctx.getSharedPreferences("settings", Context.MODE_PRIVATE).getString("language", null)
-        options.firstOrNull { it.code == normalize(saved.orEmpty()) }?.let { return it.code }
+        val opts = options(ctx)
+        opts.firstOrNull { it.code == normalize(saved.orEmpty()) }?.let { return it.code }
         val system = android.content.res.Resources.getSystem().configuration.locales
         for (i in 0 until system.size()) {
             val code = normalize(system[i].language)
-            if (options.any { it.code == code }) return code
+            if (opts.any { it.code == code }) return code
         }
         return "en"
     }
 
     fun select(ctx: Context, code: String) {
-        require(options.any { it.code == code }) { "Unsupported language: $code" }
+        require(options(ctx).any { it.code == code }) { "Unsupported language: $code" }
         ctx.getSharedPreferences("settings", Context.MODE_PRIVATE).edit().putString("language", code).apply()
     }
 

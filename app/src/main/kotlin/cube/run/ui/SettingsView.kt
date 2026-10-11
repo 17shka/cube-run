@@ -88,8 +88,7 @@ class SettingsView(
     private val multiSwipeSwitch = CandySwitch(activity, ::dpf)
     private val devTile = tile(R.drawable.ic_dev_on, Theme.ORANGE)
     private val devSwitch = CandySwitch(activity, ::dpf)
-    private val flag = ImageView(activity).apply {
-        scaleType = ImageView.ScaleType.FIT_CENTER
+    private val flag = kit.text("", 20f, Theme.INK, 400, Gravity.CENTER).apply {
         importantForAccessibility = IMPORTANT_FOR_ACCESSIBILITY_NO
     }
     private val languageName = kit.text("", 17f, Theme.INK_SOFT, 600)
@@ -261,8 +260,8 @@ class SettingsView(
         val language = Languages.current(context)
         if (shownLanguage != language) {
             shownLanguage = language
-            val option = Languages.options.single { it.code == language }
-            flag.setImageResource(option.flag)
+            val option = Languages.options(context).single { it.code == language }
+            flag.text = option.flag
             languageName.text = option.nativeName
         }
         for ((row, on, label) in toggles) row.contentDescription =

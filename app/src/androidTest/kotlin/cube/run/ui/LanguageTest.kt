@@ -211,8 +211,8 @@ class LanguageTest {
                 for (code in listOf("en", "de", "he", "ru", "uk", "en")) {
                     if (code != Languages.current(context)) {
                         tapMatching { a, view ->
-                            val option = Languages.options.single { it.code == code }
-                            val description = a.getString(R.string.language_option, option.nativeName, a.getString(option.country))
+                            val option = Languages.options(context).single { it.code == code }
+                            val description = a.getString(R.string.language_option, option.nativeName, option.country)
                             view.contentDescription == description
                         }
                     }
@@ -228,12 +228,12 @@ class LanguageTest {
                         val labels = views(sheet).filterIsInstance<TextView>().map { it.text.toString() }.toList()
                         assertTrue(labels.contains("American"))
                         assertFalse(labels.contains("English"))
-                        Languages.options.forEach { assertFalse(labels.contains(a.getString(it.country))) }
+                        Languages.options(context).forEach { assertFalse(labels.contains(it.country)) }
                         assertEquals(if (code == "he") View.LAYOUT_DIRECTION_RTL else View.LAYOUT_DIRECTION_LTR, sheet.layoutDirection)
                         val rows = views(sheet).filter { it.isClickable && it.contentDescription?.contains(",") == true }.toList()
                         assertEquals(5, rows.size)
                         assertEquals(1, rows.count { it.isSelected })
-                        assertTrue(rows.single { it.isSelected }.contentDescription.startsWith(Languages.options.single { it.code == code }.nativeName))
+                        assertTrue(rows.single { it.isSelected }.contentDescription.startsWith(Languages.options(context).single { it.code == code }.nativeName))
                         assertFalse(Stage.homeScreen)
                         assertEquals(bank, Progress.coins)
                         assertEquals(bubbles, Progress.bubbles)
@@ -414,7 +414,7 @@ class LanguageTest {
                 assertFalse(localized.gameText("Classic").isEmpty())
             }
             prefs.edit().putString("language", "unsupported").commit()
-            assertTrue(Languages.options.any { it.code == Languages.current(context) })
+            assertTrue(Languages.options(context).any { it.code == Languages.current(context) })
             prefs.edit().putString("language", "iw").commit()
             assertEquals("he", Languages.current(context))
         } finally {
