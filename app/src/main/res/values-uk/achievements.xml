@@ -4,14 +4,14 @@
     <string name="achievement_good_runner">Хороший бігун</string>
     <string name="achievement_lifetime_coins">Всього монет</string>
     <string name="achievement_unlocked_cubes">Розблоковані куби</string>
-    <string name="achievement_power_collector">Колекціонер посилень</string>
+    <string name="achievement_power_collector">Колекціонер підсилень</string>
     <string name="achievement_mystery_seeker">Шукач секретів</string>
     <string name="achievement_big_bubble">Велика бульбашка</string>
     <string name="achievement_bouncer">Стрибун</string>
     <string name="achievement_stay_centered">Тримайтеся центру</string>
     <string name="achievement_homeress">Бездомний</string>
     <string name="achievement_gambliphobic">Азартнофобія</string>
-    <string name="achievement_haptic_taps">Вібротаки</string>
+    <string name="achievement_haptic_taps">Вібродотики</string>
     <string name="achievement_single_run_score">Рахунок за один заїзд</string>
     <string name="achievement_collected_over_time">Зібрано за весь час</string>
     <string name="achievement_cube_collection">Колекція кубів</string>
@@ -47,7 +47,7 @@
     <string name="achievement_suggest_body">Запропонуйте наступне досягнення Cube Run на GitHub.</string>
     <string name="achievement_suggest_button">ЗАПРОПОНУВАТИ ДОСЯГНЕННЯ</string>
     <string name="shop_mystery_box">Таємнича коробка</string>
-    <string name="shop_mystery_box_detail">Монети, бульбашки, осколки або новий облік</string>
+    <string name="shop_mystery_box_detail">Монети, бульбашки, уламки або новий вигляд</string>
     <string name="shop_achievements_detail">Розблокуйте випробування та збирайте їх нагороди.</string>
     <string name="shop_unlocked">РОЗБЛОКОВАНО</string>
     <string name="shop_achievements_unlocked">Досягнення розблоковано</string>

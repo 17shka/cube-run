@@ -3,12 +3,13 @@ package cube.run.data
 import android.content.Context
 import android.content.res.Configuration
 import android.os.LocaleList
+import android.util.TypedValue
 import cube.run.R
 import java.util.Locale
 
-/** Automatically discovers and loads available languages from translation resources. */
+/** Register a locale in supported_languages and supply its translated metadata and flag. */
 object Languages {
-    data class Option(val code: String, val nativeName: String, val country: String, val flag: String)
+    data class Option(val code: String, val nativeName: String, val country: String, val flag: Int)
 
     fun options(ctx: Context): List<Option> {
         val codes = ctx.resources.getStringArray(R.array.supported_languages)
@@ -23,7 +24,9 @@ object Languages {
                 code = code,
                 nativeName = localizedCtx.getString(R.string.language_name),
                 country = localizedCtx.getString(R.string.language_country),
-                flag = localizedCtx.getString(R.string.language_flag)
+                flag = TypedValue().also {
+                    localizedCtx.resources.getValue(R.drawable.language_flag, it, true)
+                }.resourceId
             )
         }
     }

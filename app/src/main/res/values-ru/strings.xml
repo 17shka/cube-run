@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">Cube Run</string>
     <string name="ability_gold_bubble">Золотой пузырь</string>
     <string name="ability_gold_bubble_detail">Монеты стоят на 60% дороже, пока активен пузырь!</string>
     <string name="game_purple_cube">Фиолетовый куб</string>
@@ -12,14 +13,13 @@
     <string name="ability_gigajump">Гигапрыжок</string>
     <string name="ability_gigajump_detail">Прыгайте в два раза выше, пока активен пузырь!</string>
     <string name="ability_close_shave">На волосок</string>
-    <string name="ability_close_shave_detail">Близкие промахи дают в 3 раза больше бонусных очков!</string>
+    <string name="ability_close_shave_detail">За опасные сближения вы получаете в 3 раза больше бонусных очков!</string>
     <string name="ability_mind_synergy">СЕКРЕТНАЯ СПОСОБНОСТЬ: СИНЕРГИЯ РАЗУМА</string>
     <string name="ability_mind_synergy_detail">ВАШ ПУЗЫРЬ ДЛИТСЯ НА 30% ДОЛЬШЕ, И ВЫ МОЖЕТЕ СОВЕРШАТЬ ТРОЙНЫЕ ПРЫЖКИ, ПОКА ОН АКТИВЕН!!!</string>
     <string name="ability_bubble_haul">Улов пузырей</string>
     <string name="ability_bubble_haul_detail">Подбор пузыря дает 2 пузыря!</string>
     <string name="ability_bubble_dividend">Дивиденды пузырей</string>
     <string name="ability_bubble_dividend_detail">Получайте 1 бесплатный пузырь за каждые 200 монет, собранных за заезд!</string>
-    <string name="app_name">Cube Run</string>
     <string name="cd_sound">Звук</string>
     <string name="cd_haptics">Вибрация</string>
     <string name="cd_dev">Режим разработчика</string>
@@ -64,7 +64,7 @@
     <string name="text_every_coin_is_worth_more">Каждая монета стоит дороже</string>
     <string name="text_portals_to_bonus_worlds_open_sooner">Порталы в бонусные миры открываются быстрее</string>
     <string name="text_mystery_boxes_turn_up_more_often">Подарочные коробки появляются чаще</string>
-    <string name="text_none">нету</string>
+    <string name="text_none">нет</string>
     <string name="text_second_wind">Второе дыхание</string>
     <string name="text_revive_with_a_bubble">Возродиться с пузырем</string>
     <string name="text_max">МАКС</string>
@@ -151,7 +151,7 @@
     <string name="game_five_lanes_room_to_breathe_room_to_lose_yourself">Пять полос. Есть где вздохнуть и потерять себя.</string>
     <string name="game_the_road_rises_and_falls_hold_on">Дорога поднимается и опускается. Держитесь крепче.</string>
     <string name="game_the_lanes_drift_apart_and_you_float_between_them">Полосы расходятся, а вы парите между ними.</string>
-    <string name="game_nothing_holds_its_colour_nothing_holds_still">Ничто не держит свой цвет. Ничто не стоит на месте.</string>
+    <string name="game_nothing_holds_its_colour_nothing_holds_still">Все меняет цвет. Ничто не стоит на месте.</string>
     <string name="game_the_ground_falls_away">Земля уходит из-под ног. Звезды проносятся мимо, планеты никуда не спешат.</string>
     <string name="section_first_steps">ПЕРВЫЕ ШАГИ</string>
     <string name="section_weave">ЗИГЗАГ</string>
@@ -179,8 +179,8 @@
     <string name="section_the_wave">ВОЛНА</string>
     <string name="section_tunnel">ТОННЕЛЬ</string>
     <string name="section_peekaboo">КУ-КУ</string>
-    <string name="section_stomp">СТОМП</string>
-    <string name="section_sweepers">МЕТАТЕЛИ</string>
+    <string name="section_stomp">УДАР О ЗЕМЛЮ</string>
+    <string name="section_sweepers">ПОДВИЖНЫЕ БАЛКИ</string>
     <string name="section_chasm_run">БЕГ НАД ПРОПАСТЬЮ</string>
     <string name="section_rooftops">КРЫШИ</string>
     <string name="section_overpass">ЭСТАКАДА</string>
@@ -188,7 +188,7 @@
     <string name="section_trapdoors">ЛЮКИ</string>
     <string name="section_treasury">СОКРОВИЩНИЦА</string>
     <string name="section_tar_feather">ДЕГОТЬ И ПЕРЬЯ</string>
-    <string name="section_trampoline">ТРАМПОЛИН</string>
+    <string name="section_trampoline">БАТУТ</string>
     <string name="section_roof_hop">ПРЫЖКИ ПО КРЫШАМ</string>
     <string name="section_pendulums">МАЯТНИКИ</string>
     <string name="section_pincer">ТИСКИ</string>
@@ -234,8 +234,11 @@
         <item quantity="many">%d рядов</item>
         <item quantity="other">%d рядов</item>
     </plurals>
-    <plurals name="mystery_boxes">
+    <!-- Heading only; the box count is displayed separately. -->
+    <plurals name="mystery_boxes" tools:ignore="ImpliedQuantity">
         <item quantity="one">ПОДАРОЧНАЯ КОРОБКА</item>
+        <item quantity="few">ПОДАРОЧНЫЕ КОРОБКИ</item>
+        <item quantity="many">ПОДАРОЧНЫЕ КОРОБКИ</item>
         <item quantity="other">ПОДАРОЧНЫЕ КОРОБКИ</item>
     </plurals>
     <string name="achievement_toast_description">%1$s. %2$s. %3$s.</string>

@@ -8,7 +8,7 @@
     <string name="achievement_runner">Хороший бігун</string>
     <string name="achievement_coins">Всього монет</string>
     <string name="achievement_cubes">Розблоковані куби</string>
-    <string name="achievement_powerups">Колекціонер посилень</string>
+    <string name="achievement_powerups">Колекціонер підсилень</string>
     <string name="achievement_boxes">Шукач секретів</string>
     <string name="achievement_bubbles">Велика бульбашка</string>
     <string name="achievement_bounces">Стрибун</string>
@@ -16,7 +16,7 @@
     <string name="medal_bronze">Бронза</string>
     <string name="medal_silver">Срібло</string>
     <string name="medal_diamond">Діамант</string>
-    <string name="cd_offer_coins">Запропонувати за %1$s монет</string>
+    <string name="cd_offer_coins">Пожертвувати %1$s монет</string>
     <string name="cd_buy_coins">Купити за %1$s монет</string>
     <string name="wardrobe_buy">КУПИТИ </string>
     <string name="shop_reset_progress">СКИНУТИ ПРОГРЕС</string>

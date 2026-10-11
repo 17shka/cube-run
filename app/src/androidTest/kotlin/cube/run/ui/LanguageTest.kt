@@ -38,6 +38,14 @@ class LanguageTest {
         }
     }
 
+    // Stop the continuously animated HUD before ActivityScenario waits for main-thread idle.
+    private inline fun ActivityScenario<GameActivity>.useFinished(block: (ActivityScenario<GameActivity>) -> Unit) {
+        try { block(this) } finally {
+            this@LanguageTest.onActivity { it.finish() }
+            close()
+        }
+    }
+
     private fun tap(id: Int) = tapMatching { activity, view ->
         view.contentDescription == activity.getString(id)
     }
@@ -81,7 +89,9 @@ class LanguageTest {
         val down = SystemClock.uptimeMillis()
         for (action in intArrayOf(MotionEvent.ACTION_DOWN, MotionEvent.ACTION_UP)) {
             val event = MotionEvent.obtain(down, SystemClock.uptimeMillis(), action, x.toFloat(), y.toFloat(), 0)
-            instrumentation.sendPointerSync(event)
+            event.source = android.view.InputDevice.SOURCE_TOUCHSCREEN
+            // sendPointerSync waits for all window animations, including the looping HUD.
+            assertTrue("Touch injection failed", instrumentation.uiAutomation.injectInputEvent(event, true))
             event.recycle()
             SystemClock.sleep(60)
         }
@@ -119,7 +129,7 @@ class LanguageTest {
     @Test fun languageChangesKeepTheOpenCardInPlace() {
         Languages.select(context, "en")
         ActivityScenario.launch<GameActivity>(Intent(context, GameActivity::class.java)
-            .putExtra(Hud.EXTRA_AUTOSTART, false)).use {
+            .putExtra(Hud.EXTRA_AUTOSTART, false)).useFinished {
             SystemClock.sleep(800)
             openLanguages()
             SystemClock.sleep(300)
@@ -148,7 +158,7 @@ class LanguageTest {
         try {
             Languages.select(context, "he")
             ActivityScenario.launch<GameActivity>(Intent(context, GameActivity::class.java)
-                .putExtra(Hud.EXTRA_AUTOSTART, false)).use {
+                .putExtra(Hud.EXTRA_AUTOSTART, false)).useFinished {
                 onActivity { a ->
                     unlockField.setBoolean(null, true)
                     views(a.window.decorView).filterIsInstance<MainMenu>().single().refresh()
@@ -176,7 +186,7 @@ class LanguageTest {
         try {
             Languages.select(context, "en")
             val intent = Intent(context, GameActivity::class.java).putExtra(Hud.EXTRA_AUTOSTART, false)
-            ActivityScenario.launch<GameActivity>(intent).use { scenario ->
+            ActivityScenario.launch<GameActivity>(intent).useFinished { scenario ->
                 await { a -> views(a.window.decorView).any { it is MainMenu && it.isShown } }
                 var originalActivity: GameActivity? = null
                 var originalSurface: View? = null
@@ -305,7 +315,7 @@ class LanguageTest {
         }
         try {
             Languages.select(context, "he")
-            ActivityScenario.launch<GameActivity>(Intent(context, GameActivity::class.java).putExtra(Hud.EXTRA_AUTOSTART, false)).use {
+            ActivityScenario.launch<GameActivity>(Intent(context, GameActivity::class.java).putExtra(Hud.EXTRA_AUTOSTART, false)).useFinished {
                 await { a -> views(a.window.decorView).any { it is MainMenu && it.isShown } }
                 SystemClock.sleep(700)
                 tap(R.string.cd_skins)
@@ -402,6 +412,34 @@ class LanguageTest {
         }
     }
 
+    @Test fun slavicMenusRenderWithoutClippedText() {
+        for (code in listOf("ru", "uk")) {
+            Languages.select(context, code)
+            ActivityScenario.launch<GameActivity>(Intent(context, GameActivity::class.java)
+                .putExtra(Hud.EXTRA_AUTOSTART, false)).useFinished {
+                await { a -> views(a.window.decorView).any { it is MainMenu && it.isShown } }
+                capture("home-$code")
+                for ((id, pageName) in listOf(R.string.cd_skins to "wardrobe", R.string.cd_shop to "shop", R.string.settings_title to "settings")) {
+                    tap(id)
+                    SystemClock.sleep(500)
+                    capture("$pageName-$code")
+                    onActivity { a ->
+                        for (label in views(a.window.decorView).filterIsInstance<TextView>().filter { it.isShown && it.alpha > .99f }) {
+                            val layout = label.layout ?: continue
+                            assertTrue("Label exceeds height: ${label.text}", layout.height <= label.height - label.compoundPaddingTop - label.compoundPaddingBottom + 2)
+                            for (line in 0 until layout.lineCount) {
+                                assertEquals("Clipped label: ${label.text}", 0, layout.getEllipsisCount(line))
+                                assertTrue("Label exceeds width: ${label.text}", layout.getLineWidth(line) <= label.width - label.compoundPaddingLeft - label.compoundPaddingRight + 2)
+                            }
+                        }
+                    }
+                    tap(R.string.cd_back)
+                    SystemClock.sleep(400)
+                }
+            }
+        }
+    }
+
     @Test fun everyLanguageResolvesResourcesAndUnknownPreferenceFallsBack() {
         val prefs = context.getSharedPreferences("settings", Context.MODE_PRIVATE)
         val original = prefs.getString("language", null)
@@ -410,6 +448,17 @@ class LanguageTest {
                 Languages.select(context, code)
                 val localized = Languages.wrap(context)
                 assertEquals(title, localized.getString(R.string.languages_title))
+                val expectedFlags = mapOf("en" to R.drawable.flag_us, "de" to R.drawable.flag_de,
+                    "he" to R.drawable.flag_il, "ru" to R.drawable.flag_ru, "uk" to R.drawable.flag_uk)
+                for (option in Languages.options(localized)) {
+                    assertEquals("Flag for ${option.code} while viewing $code", expectedFlags.getValue(option.code), option.flag)
+                    assertNotNull(localized.getDrawable(option.flag))
+                }
+                if (code == "ru" || code == "uk") {
+                    assertEquals(if (code == "ru") "2 ряда" else "2 ряди", localized.resources.getQuantityString(R.plurals.count_rows, 2, 2))
+                    assertEquals(if (code == "ru") "5 рядов" else "5 рядів", localized.resources.getQuantityString(R.plurals.count_rows, 5, 5))
+                    assertEquals("21 ряд", localized.resources.getQuantityString(R.plurals.count_rows, 21, 21))
+                }
                 assertFalse(localized.resources.getQuantityString(R.plurals.count_taps, 2, 2).isEmpty())
                 assertFalse(localized.gameText("Classic").isEmpty())
             }

@@ -13,7 +13,6 @@
     <string name="settings_volume">Гучність</string>
     <string name="settings_start_speed">Початкова швидкість</string>
     <string name="settings_coins">Тихі монети</string>
-    <string name="settings_version" translatable="false">Cube Run %1$s</string>
     <string name="settings_multiswipe">Мультисвайп</string>
     <string name="codes_redeeming">Активація…</string>
 </resources>

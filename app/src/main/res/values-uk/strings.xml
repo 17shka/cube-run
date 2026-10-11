@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">Cube Run</string>
     <string name="ability_gold_bubble">Золота бульбашка</string>
     <string name="ability_gold_bubble_detail" formatted="false">Монети коштують на 60% дорожче, поки бульбашка активна!</string>
     <string name="game_purple_cube">Фіолетовий куб</string>
@@ -12,14 +13,13 @@
     <string name="ability_gigajump">Гігастрибок</string>
     <string name="ability_gigajump_detail">Стрибайте вдвічі вище, поки активна бульбашка!</string>
     <string name="ability_close_shave">На волосину</string>
-    <string name="ability_close_shave_detail">Близькі промахи дають у 3 рази більше бонусних очок!</string>
+    <string name="ability_close_shave_detail">За небезпечні зближення ви отримуєте в 3 рази більше бонусних очок!</string>
     <string name="ability_mind_synergy">СЕКРЕТНА ЗДІБНІСТЬ: СИНЕРГІЯ РОЗУМУ</string>
     <string name="ability_mind_synergy_detail" formatted="false">ВАША БУЛЬБАШКА ТРИВАЄ НА 30% ДОВШЕ, І ВИ МОЖЕТЕ ЗДІЙСНЮВАТИ ПОТРІЙНІ СТРИБКИ, ПОКИ ВОНА АКТИВНА!!!</string>
     <string name="ability_bubble_haul">Улов бульбашок</string>
     <string name="ability_bubble_haul_detail">Підбір бульбашки дає 2 бульбашки!</string>
     <string name="ability_bubble_dividend">Дивіденди бульбашок</string>
     <string name="ability_bubble_dividend_detail">Отримуйте 1 безкоштовну бульбашку за кожні 200 монет, зібраних за заїзд!</string>
-    <string name="app_name">Cube Run</string>
     <string name="cd_sound">Звук</string>
     <string name="cd_haptics">Вібрація</string>
     <string name="cd_dev">Режим розробника</string>
@@ -55,7 +55,7 @@
     <string name="text_every_row_counts_double">Кожен ряд вважається за два</string>
     <string name="text_fly_above_everything_along_a_coin_line">Летіть над усім підряд лінією монет</string>
     <string name="text_consumables">ВИТРАТНІ МАТЕРІАЛИ</string>
-    <string name="text_power_ups">ПОСИЛЕННЯ</string>
+    <string name="text_power_ups">ПІДСИЛЕННЯ</string>
     <string name="text_perks">ПОЛІПШЕННЯ</string>
     <string name="text_bubble_shield">Бульбашковий щит</string>
     <string name="text_double_tap_to_block_a_hit">Подвійне торкання для блокування удару</string>
@@ -151,7 +151,7 @@
     <string name="game_five_lanes_room_to_breathe_room_to_lose_yourself">П\'ять смуг. Є де видихнути і втратити себе.</string>
     <string name="game_the_road_rises_and_falls_hold_on">Дорога піднімається і опускається. Тримайтеся міцно.</string>
     <string name="game_the_lanes_drift_apart_and_you_float_between_them">Смуги розходяться, а ви парите між ними.</string>
-    <string name="game_nothing_holds_its_colour_nothing_holds_still">Ніщо не тримає колір. Ніщо не стоїть на місці.</string>
+    <string name="game_nothing_holds_its_colour_nothing_holds_still">Усе змінює колір. Ніщо не стоїть на місці.</string>
     <string name="game_the_ground_falls_away">Земля йде з-під ніг. Зірки проносяться повз, планети нікуди не поспішають.</string>
     <string name="section_first_steps">ПЕРШІ КРОКИ</string>
     <string name="section_weave">ПЕТЛЯННЯ</string>
@@ -179,8 +179,8 @@
     <string name="section_the_wave">ХВИЛЯ</string>
     <string name="section_tunnel">ТУНЕЛЬ</string>
     <string name="section_peekaboo">КУ-КУ</string>
-    <string name="section_stomp">СТОМП</string>
-    <string name="section_sweepers">ОЧИСНИКИ</string>
+    <string name="section_stomp">УДАР ОБ ЗЕМЛЮ</string>
+    <string name="section_sweepers">РУХОМІ БАЛКИ</string>
     <string name="section_chasm_run">БІГ НАД ПРІРВОЮ</string>
     <string name="section_rooftops">ДАХИ</string>
     <string name="section_overpass">ЕСТАКАДА</string>
@@ -188,7 +188,7 @@
     <string name="section_trapdoors">ЛЮКИ</string>
     <string name="section_treasury">СКАРБНИЦЯ</string>
     <string name="section_tar_feather">ДЬОГОТЬ ТА ПІР\'Я</string>
-    <string name="section_trampoline">ТРАМПОЛІН</string>
+    <string name="section_trampoline">БАТУТ</string>
     <string name="section_roof_hop">СТРИБКИ ПО ДАХАХ</string>
     <string name="section_pendulums">МАЯТНИКИ</string>
     <string name="section_pincer">КЛІЩІ</string>
@@ -215,23 +215,30 @@
     <string name="text_section_stats">рівень %1$d · %2$s</string>
     <string name="text_seconds">%1$s с</string>
     <string name="text_new_cosmetic">НОВЕ: %1$s!</string>
-    <string name="text_shards_collected">Зібрано %1$d %2$s</string>
+    <string name="text_shards_collected">Зібрано %2$s: %1$d</string>
     <string name="text_unlock_shards">Розблокуйте %1$s за %2$d %3$s</string>
     <string name="text_shard_progress">%1$s: %2$d з %3$d %4$s</string>
     <string name="text_toggle_on">%1$s увімк.</string>
-    <string name="text_toggle_off">%1$s викл.</string>
+    <string name="text_toggle_off">%1$s вимк.</string>
     <string name="text_show_ability">Показати здібність %1$s</string>
     <string name="text_hide_ability">Приховати здібність %1$s</string>
     <plurals name="count_taps">
         <item quantity="one">%d торкання</item>
+        <item quantity="few">%d торкання</item>
+        <item quantity="many">%d торкань</item>
         <item quantity="other">%d торкань</item>
     </plurals>
     <plurals name="count_rows">
         <item quantity="one">%d ряд</item>
+        <item quantity="few">%d ряди</item>
+        <item quantity="many">%d рядів</item>
         <item quantity="other">%d рядів</item>
     </plurals>
-    <plurals name="mystery_boxes">
+    <!-- Heading only; the box count is displayed separately. -->
+    <plurals name="mystery_boxes" tools:ignore="ImpliedQuantity">
         <item quantity="one">ТАЄМНИЧА КОРОБКА</item>
+        <item quantity="few">ТАЄМНИЧІ КОРОБКИ</item>
+        <item quantity="many">ТАЄМНИЧІ КОРОБКИ</item>
         <item quantity="other">ТАЄМНИЧІ КОРОБКИ</item>
     </plurals>
     <string name="achievement_toast_description">%1$s. %2$s. %3$s.</string>

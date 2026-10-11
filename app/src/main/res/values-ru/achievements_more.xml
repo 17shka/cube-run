@@ -11,8 +11,8 @@
     <string name="achievement_long_hauler">Дальнобойщик</string>
     <string name="achievement_shardsmith">Осколочный мастер</string>
     <string name="achievement_regular">Постоянный гость</string>
-    <string name="achievement_bubble_popper">Лопнувший пузырь</string>
-    <string name="achievement_near_miss">Близкий промах</string>
+    <string name="achievement_bubble_popper">Повелитель пузырей</string>
+    <string name="achievement_near_miss">На волосок</string>
     <string name="achievement_untouchable">Неприкасаемый</string>
     <string name="achievement_house_loses">Казино проигрывает</string>
     <string name="achievement_voidwalker">Странник пустоты</string>
@@ -37,7 +37,7 @@
     <string name="achievement_goal_shardsmith">Собрано осколков</string>
     <string name="achievement_goal_regular">Начато заездов</string>
     <string name="achievement_goal_bubble_popper">Потрачено пузырей</string>
-    <string name="achievement_goal_near_miss">Близких промахов</string>
+    <string name="achievement_goal_near_miss">Опасных сближений</string>
     <string name="achievement_goal_untouchable">Достигните 150 очков, не подбирая усиления.</string>
     <string name="achievement_goal_house_loses">Выиграйте джекпот игрока.</string>
     <string name="achievement_goal_voidwalker">Сделайте пять жертвоприношений пустоте.</string>
@@ -55,7 +55,7 @@
     <string name="achievement_goal_two_ez">Смахните на полосу и сразу обратно 50 раз за один заезд.</string>
     <string name="achievement_goal_nervous_tic">Поставьте на паузу и возобновите 50 раз за один заезд.</string>
     <string name="achievement_goal_silent_treatment">Завершите 100-очковый заезд без звука и вибрации, используя бесплатный куб.</string>
-    <string name="achievement_goal_stage_fright">Разбейтеся в течение двух секунд после стартовых ворот в 25 заездах.</string>
+    <string name="achievement_goal_stage_fright">Разбейтесь в течение двух секунд после стартовых ворот в 25 заездах.</string>
     <string name="achievement_goal_neo">\???</string>
     <string name="achievement_earned_description">Заработано достижений: %1$d из %2$d</string>
 </resources>

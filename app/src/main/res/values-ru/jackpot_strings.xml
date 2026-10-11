@@ -16,7 +16,7 @@
     <string name="medal_bronze">Бронза</string>
     <string name="medal_silver">Серебро</string>
     <string name="medal_diamond">Алмаз</string>
-    <string name="cd_offer_coins">Предложить за %1$s монет</string>
+    <string name="cd_offer_coins">Пожертвовать %1$s монет</string>
     <string name="cd_buy_coins">Купить за %1$s монет</string>
     <string name="wardrobe_buy">КУПИТЬ </string>
     <string name="shop_reset_progress">СБРОСИТЬ ПРОГРЕСС</string>

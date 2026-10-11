@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="supported_languages">
+    <string-array name="supported_languages" translatable="false">
         <item>en</item>
         <item>de</item>
         <item>he</item>
@@ -12,6 +12,6 @@
     <string name="language_option">%1$s, %2$s</string>
     <string name="language_name">American</string>
     <string name="language_country">United States</string>
-    <string name="language_flag">🇺🇸</string>
+    <item type="drawable" name="language_flag">@drawable/flag_us</item>
     <string name="tap_to_start">TAP TO START</string>
 </resources>
